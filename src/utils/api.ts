@@ -1,7 +1,7 @@
 import { Content } from "@/interface/content";
 import axios from "axios";
 
-const root = process.env.ROOT_URL;
+const root = process.env.ROOT_URL ?? "";
 
 export const API = {
   GET: async function Get(jsonName: string) {
