@@ -10,7 +10,7 @@ export default function Dashboard() {
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
     const res = await API.PUT("content", { title, content });
-    console.log("제목, 내용 생성 APi res", res);
+
     if (res.status === "success") {
       redirect(`/article/${res.id}`);
     }

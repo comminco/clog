@@ -1,5 +1,4 @@
 import fs from "fs";
-import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 import { ContentJson } from "@/interface/dataBason";
 
@@ -19,7 +18,7 @@ export async function GET(
     const data = fs.readFileSync(filePath, "utf-8"); // 동기 방식
     return Response.json(data);
   } catch (error) {
-    return Response.json("error", { status: 500 });
+    return Response.json({ message: error }, { status: 500 });
   }
 }
 
@@ -52,11 +51,11 @@ export async function PUT(
     fs.writeFileSync(filePath, JSON.stringify(contentObj), "utf-8");
     return Response.json({ status: "success", id }, { status: 200 });
   } catch (error) {
-    return Response.json("error", { status: 500 });
+    return Response.json({ message: error }, { status: 500 });
   }
 }
 
-/** 수정하는 method */
+/** 수정하는 메소드 */
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ json: string }> }
@@ -72,6 +71,6 @@ export async function POST(
     const data = fs.readFileSync(filePath, "utf-8"); // 동기 방식
     return Response.json(data);
   } catch (error) {
-    return Response.json("error", { status: 500 });
+    return Response.json({ message: error }, { status: 500 });
   }
 }

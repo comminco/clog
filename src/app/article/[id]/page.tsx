@@ -3,14 +3,21 @@ import { ContentJson } from "@/interface/dataBason";
 import Link from "next/link";
 
 /** 실제 작성 글 */
-export default async function Article({ params }: { params: { id: string } }) {
+export default async function Article({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const res = await API.GET("content");
   const contentJson: ContentJson = JSON.parse(res);
-  const id = Number(params.id);
+  const { id } = await params;
+  const numId = Number(id);
 
-  const content = contentJson.contentList.find((content) => content.id === id);
+  const content = contentJson.contentList.find(
+    (content) => content.id === numId
+  );
   if (!content) {
-    return <div>잘못된 주소(id) 입니다.</div>;
+    return <div>잘못된 경로 입니다.</div>;
   }
   return (
     <div>
