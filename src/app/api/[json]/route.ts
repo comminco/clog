@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import { ContentJson } from "@/interface/dataBason";
 import { Redis } from "@upstash/redis";
-import { NextResponse } from "next/server";
 
 // Initialize Redis
 const redis = Redis.fromEnv();
