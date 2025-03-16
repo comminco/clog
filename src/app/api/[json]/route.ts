@@ -1,6 +1,11 @@
 import fs from "fs";
 import path from "path";
 import { ContentJson } from "@/interface/dataBason";
+import { Redis } from "@upstash/redis";
+import { NextResponse } from "next/server";
+
+// Initialize Redis
+const redis = Redis.fromEnv();
 
 /** databason에서 json 읽기 */
 export async function GET(
@@ -8,15 +13,11 @@ export async function GET(
   { params }: { params: Promise<{ json: string }> }
 ) {
   const { json: jsonName } = await params; // 'a', 'b', or 'c'
+  const result = await redis.get(jsonName);
+  console.log("result", result);
 
-  const filePath = path.join(
-    process.cwd(),
-    "public",
-    `/databason/${jsonName}.json`
-  ); // 프로젝트 내 파일 경로
   try {
-    const data = fs.readFileSync(filePath, "utf-8"); // 동기 방식
-    return Response.json(data);
+    return Response.json(result);
   } catch (error) {
     return Response.json({ message: error }, { status: 500 });
   }
@@ -29,16 +30,9 @@ export async function PUT(
 ) {
   const { json: jsonName } = await params; // 'a', 'b', or 'c'
 
-  const filePath = path.join(
-    process.cwd(),
-    "public",
-    `/databason/${jsonName}.json`
-  ); // 프로젝트 내 파일 경로
-
   try {
-    const contentJsonStr = fs.readFileSync(filePath, "utf-8");
     const { title, content } = await req.json();
-    const contentObj: ContentJson = JSON.parse(contentJsonStr);
+    const contentObj = (await redis.get(jsonName)) as ContentJson;
 
     contentObj.contentIndex += 1;
     const id = contentObj.contentIndex;
@@ -47,8 +41,9 @@ export async function PUT(
       title,
       content,
     });
-    /** 파일 쓰기 */
-    fs.writeFileSync(filePath, JSON.stringify(contentObj), "utf-8");
+
+    const result = await redis.set(jsonName, contentObj);
+    console.log("put result", result);
     return Response.json({ status: "success", id }, { status: 200 });
   } catch (error) {
     return Response.json({ message: error }, { status: 500 });

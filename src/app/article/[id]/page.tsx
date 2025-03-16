@@ -9,7 +9,7 @@ export default async function Article({
   params: Promise<{ id: string }>;
 }) {
   const res = await API.GET("content");
-  const contentJson: ContentJson = JSON.parse(res);
+  const contentJson: ContentJson = res;
   const { id } = await params;
   const numId = Number(id);
 
