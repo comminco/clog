@@ -6,9 +6,10 @@ export const dynamic = "force-dynamic";
 
 /** 글 목록을 가져옵니다.  */
 export default async function ContentList() {
-  const res = await API.GET("content");
+  const res = await API.GET();
 
   const contentJson: ContentJson = res;
+
   return (
     <div>
       <div className={"mb-5"}>게시글 목록</div>
