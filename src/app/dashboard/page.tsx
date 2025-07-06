@@ -16,6 +16,7 @@ export default function Dashboard() {
     }
   }
 
+  /** HTML CODE */
   return (
     <div className={"h-full w-full flex-col f-c-c "}>
       <div>게시글 등록</div>

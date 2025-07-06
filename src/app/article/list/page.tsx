@@ -10,6 +10,7 @@ export default async function ContentList() {
 
   const contentJson: ContentJson = res;
 
+  /** HTML CODE */
   return (
     <div>
       <div className={"mb-5"}>게시글 목록</div>

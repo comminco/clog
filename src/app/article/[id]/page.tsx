@@ -24,6 +24,7 @@ export default async function Article({
     notFound();
   }
 
+  /** HTML CODE */
   return (
     <div>
       <Link href={"/article/list"} className={"text-xs"}>
