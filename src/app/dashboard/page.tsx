@@ -9,7 +9,7 @@ export default function Dashboard() {
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
     /** 콘텐츠 생성 요청 */
-    const res = await API.CREATE("content", { title, content });
+    const res = await API.CREATE({ title, content });
 
     if (res.status === "success") {
       redirect(`/article/${res.id}`);
