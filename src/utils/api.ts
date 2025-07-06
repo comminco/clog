@@ -3,13 +3,14 @@ import axios from "axios";
 
 const root = process.env.ROOT_URL ?? "";
 
+/** API 액션을 정의 */
 export const API = {
-  GET: async function Get(jsonName: string) {
-    const res = await axios.get(`${root}/api/${jsonName}`);
+  GET: async function Get() {
+    const res = await axios.get(`${root}/api`);
     return res.data;
   },
-  PUT: async function Put(jsonName: string, { title, content }: Content) {
-    const res = await axios.put(`${root}/api/${jsonName}`, { title, content });
+  CREATE: async function Create({ title, content }: Content) {
+    const res = await axios.put(`${root}/api/`, { title, content });
     return res.data;
   },
 };
